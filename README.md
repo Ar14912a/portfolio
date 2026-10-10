@@ -4,11 +4,11 @@ A personal website for Adil Khan, a physics teacher and researcher from Mingora,
 It has two views, chosen with the buttons at the top of the home screen:
 
 - **For admissions**: MS and scholarship applications. It shows education, research, teaching experience,
-  an interactive research demo (growth drive, soliton and a 3D tokamak) and documents.
+  an interactive research demo (drive index, soliton and a 3D tokamak) and documents.
 - **For recruiters**: teaching and lab work. It shows qualifications, school experience cards, a laboratory
   slideshow, services, the Teacher of the Year award, teaching documents and a short summary of other work.
 
-Live site: `https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/` (replace with your own address)
+**Live site:** https://ar14912a.github.io/portfolio/
 
 ## What is in this repository
 
@@ -35,24 +35,33 @@ No pictures, PDFs or Word files are stored here. They load from Google Drive:
 
 Open `script.js`. The top of the file lists its numbered sections:
 
-1. Pictures and documents  2. Your data (education, experience, skills, documents)  3. Building the lists
-4. Home screen  5. Scroll reveal  6. Hover pop-up  7. Document viewer  8. Contact form
-9. Research demo  10. 3D tokamak  11. Glass shine
+1. Pictures and documents
+2. Your data (education, experience, skills, documents)
+3. Building the lists
+4. Home screen
+5. Scroll reveal
+6. Hover pop-up
+7. Document viewer
+8. Contact form
+9. Research demo
+10. 3D tokamak
+11. Glass shine
 
 Text on the page is in `index.html`. Each part of the page has a comment above it.
 
 ## About the research demo
 
-The soliton tab uses the coefficient formulas of A. Khan, R. Khan, A. Khan, Y. Rashid, S. Rashid and M. Shafiq,
-*Linear and Nonlinear Mode in Magnetized e-i Plasma With Non-Maxwellian Distribution*,
-Contributions to Plasma Physics 66, e70094 (2026), https://doi.org/10.1002/ctpp.70094,
-with fixed round values for constants the paper does not state. The drive index, the turbulence picture
-and the 3D tokamak are illustrations of the trends reported in the paper. They are not simulations.
+The soliton tab uses the coefficient formulas of Aziz Khan, Raees Khan, Adil Khan, Yasmeen Rashid,
+Salma Rashid and Muhammad Shafiq, *Linear and Nonlinear Mode in Magnetized e-i Plasma With
+Non-Maxwellian Distribution*, Contributions to Plasma Physics 66, e70094 (2026),
+https://doi.org/10.1002/ctpp.70094, with fixed round values for constants the paper does not state.
+The drive index, the turbulence picture and the 3D tokamak are illustrations of the trends reported
+in the paper. They are not simulations.
 
 ## Privacy
 
-Identity documents such as passports and ID cards must never be added to this repository. The `.gitignore`
-file helps by ignoring common document and picture file types.
+Identity documents such as passports and ID cards must never be added to this repository. The
+`.gitignore` file helps by ignoring common document and picture file types.
 
 ## Licence
 
