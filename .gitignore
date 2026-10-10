@@ -1,0 +1,25 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Tools and logs
+node_modules/
+*.log
+.env
+.vscode/
+.idea/
+
+# Never commit personal documents, pictures or passwords.
+# Pictures and documents live in Google Drive, not in this repository.
+# (To publish one picture on purpose, remove its line below or force-add it with: git add -f file.jpg)
+*.pdf
+*.doc
+*.docx
+*.csv
+*.zip
+*.rar
+*.jpg
+*.jpeg
+*.png
+*passport*
+*cnic*
