@@ -1,0 +1,2216 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- WEBSITE FILES: index.html (this page and its design) and script.js (all actions). Pictures load from your Google Drive folders. -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Adil Khan | Physicist and Educator</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Figtree:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ===== COLOURS AND SETTINGS: change the colours here ===== */
+      :root {
+        --bg: #edf0fb;
+        --card: rgba(255, 255, 255, 0.58);
+        --ink: #15133a;
+        --mute: #55547a;
+        --line: rgba(120, 110, 200, 0.22);
+        --v: #6c3bff;
+        --c: #ff5c7a;
+        --y: #ffd84d;
+        --t: #0fc2a8;
+        --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      /* ===== PAGE BASICS ===== */
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 84px;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font:
+          400 17px/1.6 Figtree,
+          system-ui,
+          sans-serif;
+        overflow-x: hidden;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: Sora, Georgia, sans-serif;
+        margin: 0;
+        line-height: 1.12;
+      }
+      a {
+        color: inherit;
+      }
+      /* ===== MOVING COLOURED BLOBS IN THE BACKGROUND ===== */
+      .bl {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(70px);
+        opacity: 0.55;
+        z-index: -1;
+        animation: dr 22s ease-in-out infinite alternate;
+      }
+      .b1 {
+        width: 46vmax;
+        height: 46vmax;
+        background: #b9a6ff;
+        left: -14vmax;
+        top: -10vmax;
+      }
+      .b2 {
+        width: 40vmax;
+        height: 40vmax;
+        background: #ffb3c4;
+        right: -12vmax;
+        top: 30vh;
+        animation-delay: -8s;
+      }
+      .b3 {
+        width: 36vmax;
+        height: 36vmax;
+        background: #9bebdd;
+        left: 20vw;
+        bottom: -16vmax;
+        animation-delay: -14s;
+      }
+      @keyframes dr {
+        to {
+          transform: translate(6vmax, 5vmax) scale(1.15);
+        }
+      }
+      /* ===== LAYOUT: keeps content centred ===== */
+      .w {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 18px;
+      }
+      /* ===== GLASS CARDS (frosted look) ===== */
+      .g,
+      .card {
+        background: var(--card);
+        backdrop-filter: blur(18px) saturate(1.5);
+        -webkit-backdrop-filter: blur(18px) saturate(1.5);
+        border: 1px solid rgba(255, 255, 255, 0.75);
+        box-shadow:
+          0 12px 40px rgba(70, 50, 170, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        border-radius: 22px;
+      }
+      .card {
+        padding: 16px;
+        margin-bottom: 14px;
+      }
+      section {
+        padding: 70px 0;
+      }
+      h2 {
+        font-size: clamp(28px, 5.5vw, 42px);
+        margin-bottom: 26px;
+        position: relative;
+        padding-bottom: 12px;
+      }
+      h2:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 4px;
+        width: 56px;
+        border-radius: 4px;
+        background: linear-gradient(90deg, var(--v), var(--c));
+        transition: width 0.8s var(--ease);
+      }
+      .in h2:after,
+      h2.in:after {
+        width: 120px;
+      }
+      /* ===== TOP MENU ===== */
+      nav {
+        position: fixed;
+        top: calc(env(safe-area-inset-top, 0px) + 10px);
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 20;
+        max-width: calc(100% - 20px);
+        border-radius: 999px;
+      }
+      nav div {
+        display: flex;
+        gap: 4px;
+        padding: 6px 8px;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      nav a {
+        white-space: nowrap;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--mute);
+        padding: 7px 13px;
+        border-radius: 999px;
+        transition: all 0.3s var(--ease);
+      }
+      nav a:hover {
+        background: var(--v);
+        color: #fff;
+      }
+      /* ===== BUTTONS ===== */
+      .btn,
+      button {
+        font:
+          600 16px Figtree,
+          sans-serif;
+        border: 0;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 999px;
+        padding: 12px 22px;
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.7);
+        box-shadow: inset 0 0 0 2px var(--ink);
+        transition:
+          transform 0.35s var(--ease),
+          box-shadow 0.35s var(--ease),
+          background 0.35s;
+      }
+      .btn:hover,
+      button:hover {
+        transform: translateY(-3px);
+        box-shadow:
+          inset 0 0 0 2px var(--ink),
+          0 10px 24px rgba(108, 59, 255, 0.28);
+      }
+      .btn.p {
+        background: linear-gradient(120deg, var(--v), #9b5cff);
+        color: #fff;
+        box-shadow: 0 8px 24px rgba(108, 59, 255, 0.4);
+      }
+      .btn.wa {
+        background: #1fb655;
+        color: #fff;
+        box-shadow: 0 8px 24px rgba(31, 182, 85, 0.35);
+      }
+      :focus-visible {
+        outline: 3px solid var(--c);
+        outline-offset: 3px;
+      }
+      /* ===== HOME SCREEN: photo, headline, buttons ===== */
+      #hero {
+        min-height: 100svh;
+        display: flex;
+        align-items: center;
+        padding: 96px 0 50px;
+      }
+      #hero .w {
+        display: grid;
+        gap: 28px;
+        align-items: center;
+      }
+      @media (min-width: 760px) {
+        #hero .w {
+          grid-template-columns: 1.25fr 0.75fr;
+        }
+      }
+      .ph {
+        justify-self: center;
+        width: min(300px, 70vw);
+        aspect-ratio: 1;
+        position: relative;
+        perspective: 800px;
+        order: -1;
+      }
+      @media (min-width: 760px) {
+        .ph {
+          order: 0;
+        }
+      }
+      .ph:before {
+        content: "";
+        position: absolute;
+        inset: -10px;
+        border-radius: 34px;
+        background: conic-gradient(
+          from 0deg,
+          var(--v),
+          var(--c),
+          var(--y),
+          var(--t),
+          var(--v)
+        );
+        animation: sp 8s linear infinite;
+        filter: blur(14px);
+        opacity: 0.75;
+      }
+      @keyframes sp {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .ph img {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 30px;
+        border: 4px solid rgba(255, 255, 255, 0.9);
+        transition: transform 0.2s;
+        transform-style: preserve-3d;
+        display: block;
+      }
+      h1 {
+        font-size: clamp(38px, 8.4vw, 68px);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+      }
+      h1 .wd {
+        display: inline-block;
+        opacity: 0;
+        animation: wd 0.9s var(--ease) forwards;
+        animation-delay: calc(var(--i) * 0.09s + 0.2s);
+      }
+      @keyframes wd {
+        from {
+          opacity: 0;
+          transform: translateY(34px);
+          filter: blur(12px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+          filter: blur(0);
+        }
+      }
+      h1 em {
+        font-style: normal;
+      }
+      h1 em .wd {
+        background: linear-gradient(110deg, var(--v), var(--c));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        padding-bottom: 0.08em;
+      }
+      .lead {
+        color: var(--mute);
+        margin: 18px 0;
+        max-width: 560px;
+        font-size: 18px;
+      }
+      .tog {
+        display: inline-flex;
+        padding: 4px;
+        border-radius: 999px;
+        margin-bottom: 14px;
+      }
+      .tog button {
+        box-shadow: none;
+        background: transparent;
+        padding: 8px 16px;
+        font-size: 15px;
+      }
+      .tog button[aria-pressed="true"] {
+        background: var(--ink);
+        color: #fff;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0;
+        margin: 0 0 20px;
+        list-style: none;
+      }
+      .chips li {
+        background: var(--y);
+        color: #15133a;
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 15px;
+        animation: pop 0.5s var(--ease) both;
+      }
+      .chips li:nth-child(2) {
+        background: var(--t);
+      }
+      .chips li:nth-child(3) {
+        background: var(--c);
+        color: #fff;
+      }
+      @keyframes pop {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      /* ===== ABOUT: number boxes ===== */
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 14px;
+        margin-top: 26px;
+      }
+      .stats div {
+        padding: 18px;
+      }
+      .stats b {
+        display: block;
+        font:
+          800 34px Sora,
+          sans-serif;
+        background: linear-gradient(110deg, var(--v), var(--c));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .stats span {
+        color: var(--mute);
+        font-size: 15px;
+      }
+      /* ===== EDUCATION AND EXPERIENCE ROWS ===== */
+      .list {
+        display: grid;
+        gap: 14px;
+      }
+      .it {
+        padding: 18px 20px;
+        transition:
+          transform 0.45s var(--ease),
+          box-shadow 0.45s var(--ease);
+      }
+      .it:hover {
+        transform: translateX(8px) scale(1.01);
+        box-shadow: 0 18px 50px rgba(108, 59, 255, 0.22);
+      }
+      .it small {
+        color: var(--v);
+        font-weight: 600;
+        font-size: 14px;
+      }
+      .it h3 {
+        font-size: 20px;
+        margin: 2px 0 4px;
+        cursor: help;
+        display: inline-block;
+      }
+      .it p {
+        margin: 0;
+        color: var(--mute);
+        font-size: 16px;
+      }
+      [data-pop] {
+        cursor: help;
+        border-bottom: 1.5px dashed var(--v);
+      }
+      .it h3[data-pop] {
+        border-bottom-width: 2px;
+      }
+      /* ===== HOVER PICTURE POP-UP ===== */
+      #pop {
+        position: fixed;
+        z-index: 60;
+        width: 230px;
+        pointer-events: none;
+        opacity: 0;
+        transform: translateY(8px) scale(0.92);
+        transition:
+          opacity 0.25s,
+          transform 0.35s var(--ease);
+        padding: 8px;
+        border-radius: 18px;
+      }
+      #pop.on {
+        opacity: 1;
+        transform: none;
+      }
+      #pop .im {
+        height: 140px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #d9d0ff, #ffd3dc, #bff3ea);
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        color: var(--mute);
+        overflow: hidden;
+      }
+      #pop img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      #pop p {
+        margin: 6px 4px 0;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      /* ===== SKILL TAGS ===== */
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+      .tags li {
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid var(--line);
+        font-size: 15px;
+        transition: all 0.3s var(--ease);
+      }
+      .tags li:hover {
+        background: var(--v);
+        color: #fff;
+        transform: translateY(-3px);
+      }
+      /* ===== DOCUMENT CARDS ===== */
+      .docs {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 14px;
+      }
+      .dc {
+        padding: 18px;
+        text-align: left;
+        font: inherit;
+        border-radius: 22px;
+        display: block;
+        width: 100%;
+        color: var(--ink);
+        box-shadow:
+          0 12px 40px rgba(70, 50, 170, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      }
+      .dc:hover {
+        box-shadow: 0 18px 44px rgba(108, 59, 255, 0.25);
+        transform: translateY(-6px) rotate(-0.4deg);
+      }
+      .dc b {
+        display: block;
+        font:
+          700 17px Sora,
+          sans-serif;
+      }
+      .dc span {
+        font-size: 14px;
+        color: var(--mute);
+      }
+      .dc i {
+        display: inline-block;
+        font-style: normal;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 2px 10px;
+        border-radius: 999px;
+        margin-top: 10px;
+        background: var(--y);
+        color: #15133a;
+      }
+      .dc i.ok {
+        background: var(--t);
+      }
+      /* ===== DOCUMENT VIEWER (full screen) ===== */
+      #vw {
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        display: grid;
+        grid-template-rows: auto 1fr;
+        background: rgba(237, 240, 251, 0.82);
+        backdrop-filter: blur(22px);
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.4s,
+          visibility 0.4s;
+        padding: env(safe-area-inset-top, 0px) 12px
+          env(safe-area-inset-bottom, 0px);
+      }
+      #vw.on {
+        opacity: 1;
+        visibility: visible;
+      }
+      #vw header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 4px;
+      }
+      #vw h3 {
+        font-size: 18px;
+      }
+      #vs {
+        position: relative;
+        border-radius: 18px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.7);
+        display: grid;
+        place-items: center;
+        transform: scale(0.94);
+        transition: transform 0.5s var(--ease);
+        user-select: none;
+        -webkit-user-select: none;
+      }
+      #vw.on #vs {
+        transform: none;
+      }
+      #vs img,
+      #vs iframe {
+        max-width: 100%;
+        max-height: 100%;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border: 0;
+        -webkit-user-drag: none;
+      }
+      #wm {
+        position: absolute;
+        inset: -50%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 46px 60px;
+        transform: rotate(-24deg);
+        pointer-events: none;
+        opacity: 0.13;
+        font:
+          700 18px Sora,
+          sans-serif;
+        align-content: center;
+      }
+      /* ===== FAQ ===== */
+      .fq details {
+        padding: 14px 20px;
+        margin-bottom: 10px;
+        border-radius: 16px;
+        transition: box-shadow 0.3s;
+      }
+      .fq details[open] {
+        box-shadow: 0 14px 40px rgba(108, 59, 255, 0.18);
+      }
+      .fq summary {
+        font-weight: 600;
+        font-size: 18px;
+        cursor: pointer;
+      }
+      .fq p {
+        color: var(--mute);
+        margin: 10px 0 0;
+      }
+      /* ===== CONTACT FORM ===== */
+      form {
+        display: grid;
+        gap: 12px;
+        max-width: 560px;
+      }
+      label {
+        font-weight: 600;
+        font-size: 14px;
+        display: grid;
+        gap: 4px;
+      }
+      label b {
+        color: var(--v);
+      }
+      input,
+      textarea,
+      select {
+        font: inherit;
+        padding: 12px 14px;
+        border-radius: 14px;
+        border: 1.5px solid var(--line);
+        background: rgba(255, 255, 255, 0.75);
+        color: var(--ink);
+        width: 100%;
+      }
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+      #note {
+        min-height: 24px;
+        margin: 0;
+        font-weight: 600;
+        color: var(--t);
+      }
+      /* ===== FOOTER ===== */
+      footer {
+        padding: 36px 0 60px;
+        color: var(--mute);
+        font-size: 15px;
+      }
+      /* ===== SMOOTH APPEAR WHEN SCROLLING ===== */
+      .rv {
+        opacity: 0;
+        transform: translateY(30px);
+        filter: blur(8px);
+        transition:
+          opacity 0.9s var(--ease),
+          transform 0.9s var(--ease),
+          filter 0.9s var(--ease);
+      }
+      .rv.in {
+        opacity: 1;
+        transform: none;
+        filter: none;
+      }
+      /* ===== RESEARCH DEMO: sliders, tabs, canvases ===== */
+      .ctl {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px 16px;
+      }
+      input[type="range"] {
+        padding: 0;
+        accent-color: var(--v);
+      }
+      .tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+      }
+      .tabs button {
+        padding: 8px 16px;
+        font-size: 15px;
+      }
+      .tabs button[aria-selected="true"] {
+        background: var(--ink);
+        color: #fff;
+      }
+      canvas {
+        width: 100%;
+        display: block;
+        border-radius: 10px;
+      }
+      .rd {
+        font-size: 15px;
+        margin: 10px 0 0;
+      }
+      .note {
+        font-size: 14px;
+        color: var(--mute);
+        margin: 8px 0 0;
+      }
+      .tag {
+        display: inline-block;
+        background: var(--y);
+        color: #15133a;
+        border-radius: 999px;
+        padding: 2px 10px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      button.r {
+        font-size: 14px;
+        padding: 6px 14px;
+        margin-top: 8px;
+      }
+      /* ===== PRINT: only the CV is printed ===== */
+      #cvprint {
+        display: none;
+      }
+      @media print {
+        body > *:not(#cvprint) {
+          display: none !important;
+        }
+        #cvprint {
+          display: block;
+          color: #000;
+          font:
+            12px/1.45 Figtree,
+            sans-serif;
+          padding: 0;
+        }
+        #cvprint h1 {
+          font-size: 22px;
+        }
+        #cvprint h2 {
+          font-size: 14px;
+          margin: 12px 0 4px;
+          padding: 0;
+          border-bottom: 1px solid #999;
+        }
+        #cvprint h2:after {
+          display: none;
+        }
+        #cvprint p {
+          margin: 2px 0;
+        }
+      }
+      /* ===== FOR PEOPLE WHO TURN OFF ANIMATION ===== */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+        .rv,
+        h1 .wd {
+          opacity: 1;
+          transform: none;
+          filter: none;
+        }
+      }
+
+      /* ---------- "What each slider does" box ---------- */
+      #why p {
+        margin: 8px 0;
+        padding: 8px 12px;
+        border-radius: 12px;
+        transition: background 0.4s;
+        font-size: 16px;
+      }
+      #why p.hl {
+        background: rgba(108, 59, 255, 0.14);
+      }
+      #why b {
+        color: var(--v);
+      }
+      .it h3[data-doc] {
+        cursor: pointer;
+        border-bottom: 2px dashed var(--c);
+      }
+
+      /* ===== LIQUID GLASS: iPhone-style glossy material (this block overrides the older styles above) ===== */
+      body:before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background:
+          radial-gradient(
+            40vmax 30vmax at 88% 6%,
+            rgba(255, 216, 77, 0.55),
+            transparent 62%
+          ),
+          radial-gradient(
+            36vmax 28vmax at 6% 72%,
+            rgba(15, 194, 168, 0.45),
+            transparent 62%
+          );
+      }
+      .bl {
+        opacity: 0.7;
+      }
+
+      /* glossy capsule buttons (kept above the glass block so glass cards keep their own look) */
+      .btn,
+      button {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.97) 0%,
+          rgba(255, 255, 255, 0.6) 50%,
+          rgba(255, 255, 255, 0.82) 100%
+        );
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        box-shadow:
+          inset 0 1.5px 0 #fff,
+          inset 0 -2px 5px rgba(80, 60, 200, 0.18),
+          0 6px 16px rgba(60, 40, 160, 0.22),
+          0 1px 3px rgba(0, 0, 0, 0.12);
+      }
+      .btn:hover,
+      button:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow:
+          inset 0 1.5px 0 #fff,
+          inset 0 -2px 5px rgba(80, 60, 200, 0.18),
+          0 12px 26px rgba(60, 40, 160, 0.3),
+          0 1px 3px rgba(0, 0, 0, 0.12);
+      }
+      .btn.p {
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.35);
+        background:
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.55) 0%,
+            rgba(255, 255, 255, 0.1) 48%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(255, 255, 255, 0.14) 100%
+          ),
+          linear-gradient(120deg, #6c3bff, #9b5cff);
+        box-shadow:
+          inset 0 1.5px 0 rgba(255, 255, 255, 0.75),
+          inset 0 -3px 7px rgba(40, 10, 140, 0.35),
+          0 10px 26px rgba(108, 59, 255, 0.45);
+      }
+      .btn.wa {
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.35);
+        background:
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.55) 0%,
+            rgba(255, 255, 255, 0.1) 48%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(255, 255, 255, 0.14) 100%
+          ),
+          linear-gradient(120deg, #1fb655, #35d36f);
+        box-shadow:
+          inset 0 1.5px 0 rgba(255, 255, 255, 0.75),
+          inset 0 -3px 7px rgba(0, 80, 30, 0.35),
+          0 10px 26px rgba(31, 182, 85, 0.4);
+      }
+      .tog button,
+      .tabs button {
+        background: transparent;
+        border-color: transparent;
+        box-shadow: none;
+      }
+      .tog button[aria-pressed="true"],
+      .tabs button[aria-selected="true"] {
+        color: #fff;
+        background:
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.28),
+            rgba(255, 255, 255, 0) 50%
+          ),
+          linear-gradient(180deg, #3b3868, #15133a);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.5),
+          0 4px 12px rgba(21, 19, 58, 0.35);
+      }
+      .tabs button {
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.35);
+      }
+      .tabs button[aria-selected="true"] {
+        border-color: transparent;
+      }
+      .th {
+        background: none;
+        box-shadow: none;
+        border: 0;
+      }
+
+      /* the glass material: frosted blur, bright top edge, soft light in the corner, shine that follows the finger or mouse */
+      .g,
+      .card {
+        background:
+          radial-gradient(
+            circle 160px at var(--mx, -50%) var(--my, -50%),
+            rgba(255, 255, 255, 0.6),
+            rgba(255, 255, 255, 0) 100%
+          ),
+          radial-gradient(
+            140% 100% at 0% 0%,
+            rgba(255, 255, 255, 0.8) 0%,
+            rgba(255, 255, 255, 0) 52%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.46) 0%,
+            rgba(255, 255, 255, 0.16) 52%,
+            rgba(255, 255, 255, 0.3) 100%
+          );
+        -webkit-backdrop-filter: blur(26px) saturate(1.9) brightness(1.07);
+        backdrop-filter: blur(26px) saturate(1.9) brightness(1.07);
+        border: 1px solid rgba(255, 255, 255, 0.65);
+        box-shadow:
+          inset 0 1.5px 0 rgba(255, 255, 255, 0.95),
+          inset 0 -1.5px 0 rgba(255, 255, 255, 0.35),
+          inset 1.5px 0 0 rgba(255, 255, 255, 0.4),
+          inset -1.5px 0 0 rgba(255, 255, 255, 0.25),
+          inset 0 0 22px rgba(255, 255, 255, 0.28),
+          0 14px 38px rgba(55, 35, 160, 0.16),
+          0 2px 8px rgba(55, 35, 160, 0.1);
+      }
+      .dc:hover {
+        box-shadow:
+          inset 0 1.5px 0 #fff,
+          inset 0 0 22px rgba(255, 255, 255, 0.3),
+          0 20px 46px rgba(108, 59, 255, 0.3);
+      }
+      .it:hover {
+        box-shadow:
+          inset 0 1.5px 0 #fff,
+          inset 0 0 26px rgba(255, 255, 255, 0.35),
+          0 22px 52px rgba(108, 59, 255, 0.26);
+      }
+
+      .chips li,
+      .tags li {
+        background-image: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.6),
+          rgba(255, 255, 255, 0) 62%
+        );
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.85),
+          0 4px 10px rgba(30, 20, 100, 0.14);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+      }
+      .chips li {
+        background-color: var(--y);
+      }
+      .chips li:nth-child(2) {
+        background-color: var(--t);
+      }
+      .chips li:nth-child(3) {
+        background-color: var(--c);
+      }
+      .tags li {
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+
+      input,
+      textarea,
+      select {
+        background: rgba(255, 255, 255, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.85);
+        box-shadow:
+          inset 0 2px 5px rgba(60, 40, 160, 0.12),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.9);
+      }
+      .ph:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 30px;
+        pointer-events: none;
+        background: linear-gradient(
+          155deg,
+          rgba(255, 255, 255, 0.5) 0%,
+          rgba(255, 255, 255, 0) 34%,
+          rgba(255, 255, 255, 0) 70%,
+          rgba(255, 255, 255, 0.18) 100%
+        );
+        box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.9);
+      }
+      .ph img {
+        box-shadow: 0 18px 40px rgba(60, 30, 160, 0.35);
+      }
+      #vw {
+        background: rgba(236, 240, 255, 0.55);
+        -webkit-backdrop-filter: blur(34px) saturate(1.7);
+        backdrop-filter: blur(34px) saturate(1.7);
+      }
+      #vs {
+        box-shadow:
+          inset 0 1.5px 0 #fff,
+          0 20px 60px rgba(40, 30, 140, 0.3);
+      }
+
+      /* ===== TWO VIEWS: .ma shows for admissions only, .mr shows for recruiters only ===== */
+      body.rec .ma {
+        display: none !important;
+      }
+      body:not(.rec) .mr {
+        display: none !important;
+      }
+
+      /* ===== EXPERIENCE CARDS: a permanent picture, and a little larger on hover ===== */
+      .xp {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 18px;
+      }
+      .xc {
+        overflow: hidden;
+        padding: 0;
+        transition:
+          transform 0.5s var(--ease),
+          box-shadow 0.5s var(--ease);
+      }
+      .xc:hover {
+        transform: scale(1.045);
+        z-index: 2;
+        box-shadow:
+          inset 0 1.5px 0 #fff,
+          0 26px 56px rgba(108, 59, 255, 0.3);
+      }
+      .xi {
+        height: 150px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #d9d0ff, #bff3ea);
+      }
+      .xi img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.8s var(--ease);
+      }
+      .xc:hover .xi img {
+        transform: scale(1.08);
+      }
+      .xt {
+        padding: 16px 18px 18px;
+      }
+      .xt small {
+        color: var(--v);
+        font-weight: 600;
+        font-size: 14px;
+      }
+      .xt h3 {
+        font-size: 19px;
+        margin: 2px 0 6px;
+        display: inline-block;
+      }
+      .xt p {
+        margin: 0;
+        color: var(--mute);
+        font-size: 15px;
+      }
+      .xt h3[data-doc] {
+        cursor: pointer;
+        border-bottom: 2px dashed var(--c);
+      }
+      .quals {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 18px;
+      }
+
+      /* ===== RECRUITER VIEW: long rectangular school cards ===== */
+      body.rec .xp {
+        grid-template-columns: 1fr;
+      }
+      body.rec .xc {
+        display: flex;
+        align-items: stretch;
+        min-height: 160px;
+      }
+      body.rec .xc:hover {
+        transform: scale(1.025);
+      }
+      body.rec .xi {
+        width: 38%;
+        min-width: 140px;
+        height: auto;
+        flex: none;
+      }
+      body.rec .quals .xc {
+        display: block;
+      }
+      body.rec .quals .xi {
+        width: auto;
+        height: 160px;
+      }
+      @media (max-width: 560px) {
+        body.rec .xc {
+          flex-direction: column;
+        }
+        body.rec .xi {
+          width: 100%;
+          height: 150px;
+        }
+      }
+
+      /* ===== LAB BANNER ===== */
+      .lab {
+        position: relative;
+        min-height: 320px;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-end;
+        padding: 0;
+      }
+      .labbg {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, #0a84ff, #00c7be);
+      }
+      .lab img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 1.2s var(--ease);
+      }
+      .lab:hover img {
+        transform: scale(1.05);
+      }
+      .labtxt {
+        position: relative;
+        width: 100%;
+        padding: 70px 26px 26px;
+        color: #fff;
+        background: linear-gradient(
+          0deg,
+          rgba(4, 28, 66, 0.82),
+          rgba(4, 28, 66, 0)
+        );
+      }
+      .labtxt h2 {
+        margin: 0 0 6px;
+        font-size: clamp(26px, 5vw, 38px);
+        padding: 0;
+      }
+      .labtxt h2:after {
+        display: none;
+      }
+      .labtxt p {
+        margin: 0;
+        max-width: 620px;
+        font-size: 18px;
+      }
+
+      /* ===== SERVICES ===== */
+      .svs {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 18px;
+      }
+      .sv {
+        position: relative;
+        min-height: 240px;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-end;
+        padding: 0;
+        color: #fff;
+        transition: transform 0.5s var(--ease);
+      }
+      .sv:hover {
+        transform: translateY(-6px) scale(1.02);
+      }
+      .sv .sbg {
+        position: absolute;
+        inset: 0;
+      }
+      .sv img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.9s var(--ease);
+      }
+      .sv:hover img {
+        transform: scale(1.1);
+      }
+      .sv .st {
+        position: relative;
+        width: 100%;
+        padding: 56px 18px 18px;
+        background: linear-gradient(
+          0deg,
+          rgba(4, 28, 66, 0.82),
+          rgba(4, 28, 66, 0)
+        );
+      }
+      .sv h3 {
+        font-size: 19px;
+        margin: 0 0 4px;
+      }
+      .sv p {
+        margin: 0;
+        font-size: 15px;
+        opacity: 0.95;
+      }
+
+      /* ===== AWARD ===== */
+      .award {
+        display: grid;
+        grid-template-columns: 1fr 1.25fr;
+        overflow: hidden;
+        padding: 0;
+      }
+      @media (max-width: 640px) {
+        .award {
+          grid-template-columns: 1fr;
+        }
+      }
+      .awimg {
+        min-height: 260px;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 18px;
+        color: var(--mute);
+        background: linear-gradient(
+          135deg,
+          rgba(10, 132, 255, 0.18),
+          rgba(0, 199, 190, 0.25)
+        );
+      }
+      .awimg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .awtxt {
+        padding: 24px;
+      }
+      .awtxt h3 {
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+      .awtxt p {
+        margin: 0 0 10px;
+        color: var(--mute);
+      }
+      .more {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 14px;
+        margin-bottom: 20px;
+      }
+      .more div {
+        padding: 16px 18px;
+      }
+      .more b {
+        display: block;
+        font:
+          700 17px Sora,
+          sans-serif;
+        margin-bottom: 4px;
+      }
+      .more span {
+        color: var(--mute);
+        font-size: 15px;
+      }
+
+      /* ===== RECRUITER THEME: glossy, watery blue ===== */
+      body.rec {
+        --bg: #e2f4ff;
+        --v: #0a84ff;
+        --c: #00c7be;
+        --y: #a5ebff;
+        --t: #2ee6c5;
+        --mute: #3b5a78;
+        --ink: #0b1f3a;
+        --line: rgba(10, 132, 255, 0.22);
+      }
+      body.rec .b1 {
+        background: #7ccbff;
+      }
+      body.rec .b2 {
+        background: #6bf2df;
+      }
+      body.rec .b3 {
+        background: #9db7ff;
+      }
+      body.rec:before {
+        background:
+          radial-gradient(
+            40vmax 30vmax at 88% 6%,
+            rgba(120, 235, 255, 0.6),
+            transparent 62%
+          ),
+          radial-gradient(
+            36vmax 28vmax at 6% 72%,
+            rgba(60, 160, 255, 0.45),
+            transparent 62%
+          );
+      }
+      body.rec:after {
+        content: "";
+        position: fixed;
+        inset: -20%;
+        z-index: -1;
+        pointer-events: none;
+        opacity: 0.55;
+        mix-blend-mode: soft-light;
+        background:
+          radial-gradient(
+            ellipse 60% 40% at 30% 30%,
+            rgba(255, 255, 255, 0.6),
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 50% 35% at 75% 65%,
+            rgba(255, 255, 255, 0.5),
+            transparent 60%
+          ),
+          repeating-radial-gradient(
+            circle at 20% 80%,
+            rgba(255, 255, 255, 0.25) 0 3px,
+            transparent 3px 46px
+          );
+        animation: wave 16s ease-in-out infinite alternate;
+      }
+      @keyframes wave {
+        to {
+          transform: translate(4%, 3%) rotate(3deg) scale(1.06);
+        }
+      }
+      #bubs {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        overflow: hidden;
+        display: none;
+      }
+      body.rec #bubs {
+        display: block;
+      }
+      .bub {
+        position: absolute;
+        bottom: -60px;
+        border-radius: 50%;
+        animation: rise linear infinite;
+        background: radial-gradient(
+          circle at 30% 28%,
+          rgba(255, 255, 255, 0.95),
+          rgba(255, 255, 255, 0.22) 36%,
+          rgba(120, 210, 255, 0.16) 72%
+        );
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        box-shadow:
+          inset 0 0 8px rgba(255, 255, 255, 0.7),
+          0 0 10px rgba(120, 210, 255, 0.35);
+      }
+      @keyframes rise {
+        to {
+          transform: translateY(-115vh) translateX(var(--dx, 20px));
+        }
+      }
+      body.rec .g,
+      body.rec .card {
+        background:
+          radial-gradient(
+            circle 160px at var(--mx, -50%) var(--my, -50%),
+            rgba(255, 255, 255, 0.65),
+            rgba(255, 255, 255, 0) 100%
+          ),
+          radial-gradient(
+            140% 100% at 0% 0%,
+            rgba(255, 255, 255, 0.85) 0%,
+            rgba(255, 255, 255, 0) 52%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.5) 0%,
+            rgba(190, 235, 255, 0.16) 55%,
+            rgba(110, 215, 255, 0.3) 100%
+          );
+        box-shadow:
+          inset 0 1.5px 0 rgba(255, 255, 255, 0.95),
+          inset 0 -1.5px 0 rgba(120, 220, 255, 0.4),
+          inset 0 0 26px rgba(160, 230, 255, 0.35),
+          0 14px 38px rgba(10, 90, 180, 0.18),
+          0 2px 8px rgba(10, 90, 180, 0.1);
+      }
+      body.rec .btn.p {
+        background:
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.55) 0%,
+            rgba(255, 255, 255, 0.1) 48%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(255, 255, 255, 0.14) 100%
+          ),
+          linear-gradient(120deg, #0a84ff, #00c7be);
+        box-shadow:
+          inset 0 1.5px 0 rgba(255, 255, 255, 0.75),
+          inset 0 -3px 7px rgba(0, 60, 140, 0.35),
+          0 10px 26px rgba(10, 132, 255, 0.45);
+      }
+      body.rec .xc:hover {
+        box-shadow:
+          inset 0 1.5px 0 #fff,
+          0 26px 56px rgba(10, 132, 255, 0.32);
+      }
+      body.rec .xi {
+        background: linear-gradient(135deg, #bfe8ff, #b8f5ec);
+      }
+      body.swap section,
+      body.swap header {
+        animation: swapin 0.8s var(--ease);
+      }
+      @keyframes swapin {
+        from {
+          opacity: 0;
+          filter: blur(10px) saturate(2);
+          transform: scale(0.985);
+        }
+      }
+
+      /* ===== SMOOTH TRANSITIONS: colours glide between the two views ===== */
+      @property --v {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: #6c3bff;
+      }
+      @property --c {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: #ff5c7a;
+      }
+      @property --y {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: #ffd84d;
+      }
+      @property --t {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: #0fc2a8;
+      }
+      @property --bg {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: #edf0fb;
+      }
+      @property --ink {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: #15133a;
+      }
+      @property --mute {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: #55547a;
+      }
+      body {
+        transition:
+          --v 0.9s ease,
+          --c 0.9s ease,
+          --y 0.9s ease,
+          --t 0.9s ease,
+          --bg 0.9s ease,
+          --ink 0.9s ease,
+          --mute 0.9s ease;
+      }
+      body:before,
+      body:after,
+      .bl {
+        transition:
+          opacity 0.9s ease,
+          background 0.9s ease;
+      }
+      .xc,
+      .sv,
+      .dc,
+      .it,
+      .btn,
+      button {
+        will-change: transform;
+      }
+      /* the circle reveal when you press For admissions / For recruiters */
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation: none;
+        mix-blend-mode: normal;
+      }
+      ::view-transition-old(root) {
+        z-index: 1;
+      }
+      ::view-transition-new(root) {
+        z-index: 2;
+      }
+
+      /* ===== WATER DROP: rings that spread out from the button when you switch views ===== */
+      .drop {
+        position: fixed;
+        z-index: 95;
+        width: 36px;
+        height: 36px;
+        margin: -18px 0 0 -18px;
+        border-radius: 50%;
+        pointer-events: none;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0) 56%,
+          rgba(255, 255, 255, 0.75) 62%,
+          rgba(180, 235, 255, 0.35) 68%,
+          rgba(255, 255, 255, 0) 74%
+        );
+        animation: dropring 1.6s cubic-bezier(0.2, 0.65, 0.25, 1) forwards;
+      }
+      @keyframes dropring {
+        from {
+          transform: scale(0.3);
+          opacity: 1;
+        }
+        to {
+          transform: scale(60);
+          opacity: 0;
+        }
+      }
+
+      /* ===== HOVER: a slow, gentle grow (no sudden jump) ===== */
+      .xc,
+      .sv,
+      .dc,
+      .it,
+      .stats .g,
+      .award,
+      .lab {
+        transition:
+          opacity 0.9s var(--ease),
+          filter 0.9s var(--ease),
+          transform 1.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+          box-shadow 1.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+      }
+      .xc:hover {
+        transform: scale(1.03);
+      }
+      body.rec .xc:hover {
+        transform: scale(1.02);
+      }
+      .sv:hover {
+        transform: translateY(-4px) scale(1.02);
+      }
+      .dc:hover {
+        transform: translateY(-4px);
+      }
+      .it:hover {
+        transform: translateX(6px) scale(1.01);
+      }
+      .xi img,
+      .sv img {
+        transition-duration: 2.4s;
+        transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+      }
+      .xc:hover .xi img,
+      .sv:hover img {
+        transform: scale(1.06);
+      }
+      .btn,
+      button {
+        transition:
+          transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+          box-shadow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+          background 0.5s;
+      }
+
+      /* ===== LAB SLIDESHOW: pictures drift in, zoom slowly and fade into each other ===== */
+      .lab .slides {
+        position: absolute;
+        inset: 0;
+      }
+      .lab .slide {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transform: translateX(5%) scale(1.12);
+        transition:
+          opacity 1.8s ease,
+          transform 7s ease-out;
+      }
+      .lab .slide.on {
+        opacity: 1;
+        transform: translateX(0) scale(1.02);
+        z-index: 1;
+      }
+      .lab .slide.prev {
+        opacity: 0;
+        transform: translateX(-4%) scale(1.06);
+        transition:
+          opacity 1.8s ease,
+          transform 2.4s ease-in;
+        z-index: 0;
+      }
+      .lab:hover .slide.on {
+        transform: translateX(0) scale(1.02);
+      }
+      .lab .labtxt {
+        z-index: 3;
+      }
+      .lab .dots {
+        position: absolute;
+        right: 18px;
+        top: 16px;
+        z-index: 4;
+        display: flex;
+        gap: 7px;
+      }
+      .lab .dots i {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.45);
+        transition: all 0.6s ease;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+      }
+      .lab .dots i.on {
+        width: 26px;
+        border-radius: 6px;
+        background: #fff;
+      }
+
+      /* ===== WHAT I OFFER: a soft picture behind the whole section ===== */
+      #services {
+        position: relative;
+        overflow: hidden;
+      }
+      #services .svbg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0.55;
+        filter: blur(3px) saturate(1.2);
+        transform: scale(1.06);
+        z-index: -1;
+      }
+      #services:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: linear-gradient(
+          180deg,
+          rgba(226, 244, 255, 0.9),
+          rgba(226, 244, 255, 0.35) 40%,
+          rgba(226, 244, 255, 0.9)
+        );
+      }
+      #services .w {
+        position: relative;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- BACKGROUND BLOBS -->
+    <div id="bubs" aria-hidden="true"></div>
+    <div class="bl b1"></div>
+    <div class="bl b2"></div>
+    <div class="bl b3"></div>
+    <!-- TOP MENU: each link jumps to a section id -->
+    <nav class="g">
+      <div>
+        <a href="#hero">Home</a>
+        <a class="ma" href="#education">Education</a>
+        <a class="mr" href="#qualifications">Qualifications</a>
+        <a class="ma" href="#research">Research</a>
+        <a href="#experience">Experience</a>
+        <a class="mr" href="#lab">Lab</a>
+        <a class="mr" href="#services">Services</a>
+        <a class="ma" href="#demo">Demo</a>
+        <a href="#documents">Documents</a>
+        <a class="mr" href="#award">Award</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+
+    <!-- HOME: photo, headline, intro, buttons. Text of the intro is here. -->
+    <header id="hero">
+      <div class="w">
+        <div>
+          <div class="tog g" role="group" aria-label="Who is visiting">
+            <button id="mA" aria-pressed="true">For admissions</button
+            ><button id="mR" aria-pressed="false">For recruiters</button>
+          </div>
+          <h1 id="h1">Physicist applying for <em>funded MS programs.</em></h1>
+          <p class="lead ma">
+            I completed my BS in Physics at the University of Swat, where I
+            researched ion temperature gradient modes in plasma using the
+            Kaniadakis distribution. I co-authored that work in
+            <i>Contributions to Plasma Physics</i> (2026). I teach physics and
+            mathematics, run physics labs, and write research simulations in
+            Python and LaTeX.
+          </p>
+          <p class="lead mr">
+            I teach physics and mathematics at The Knowledge Fort School, where
+            I also run the physics lab practicals. Over seven years I have
+            taught in four schools and run my own tuition academy. I plan
+            lessons, assess students, report to parents and organise school
+            activities. I am completing my B.Ed at Allama Iqbal Open University.
+          </p>
+          <ul class="chips" id="chips"></ul>
+          <div class="row">
+            <a class="btn p" id="cta" href="#documents"></a
+            ><a class="btn" href="#" id="cvb">Read my CV</a
+            ><a
+              class="btn wa"
+              href="https://wa.me/923499236145?text=Hello%20Adil%2C%20I%20found%20your%20portfolio."
+              target="_blank"
+              rel="noopener"
+              >WhatsApp me</a
+            >
+          </div>
+        </div>
+        <div class="ph" id="ph">
+          <img src="https://drive.google.com/thumbnail?id=1Sw_Kcd19OolvIoMrUVKeQzTX1LO33rGd&sz=w600" alt="Portrait of Adil Khan" />
+        </div>
+      </div>
+    </header>
+
+    <!-- ABOUT ME: paragraph, number boxes and skills (skills come from script.js) -->
+    <section id="about">
+      <div class="w">
+        <h2 class="rv">About me</h2>
+        <p class="rv ma" style="max-width: 660px">
+          I teach physics and mathematics at The Knowledge Fort School and run
+          my own tuition academy, as I have for seven years. I supervise physics
+          labs, collect and analyse experimental data, and write the reports. In
+          my research I built analytical models for ITG modes, ran the numerical
+          simulations in Python and wrote the paper in LaTeX. I'm now applying
+          to MS programs that offer funding or scholarships, and I take on
+          research, lab and teaching roles.
+        </p>
+        <p class="rv mr" style="max-width: 660px">
+          I teach physics and mathematics at The Knowledge Fort School and run
+          the physics lab practicals there. Before that I taught at three other
+          schools, and I have run my own tuition academy for seven years. I plan
+          lessons, assess students, keep records, report progress to parents and
+          help organise school events. I am completing my B.Ed at Allama Iqbal
+          Open University.
+        </p>
+        <div class="stats">
+          <div class="g rv">
+            <b>3.55/4</b><span>BS Physics, University of Swat</span>
+          </div>
+          <div class="g rv">
+            <b>7+ years</b><span>Teaching physics and maths</span>
+          </div>
+          <div class="g rv">
+            <b>1 paper</b><span>Co-authored, published 2026</span>
+          </div>
+          <div class="g rv">
+            <b>3 languages</b><span>Pashto, Urdu, English</span>
+          </div>
+        </div>
+        <h3 class="rv" style="margin: 34px 0 12px; font-size: 22px">Skills</h3>
+        <ul class="tags rv" id="skills"></ul>
+      </div>
+    </section>
+
+    <!-- EDUCATION: rows are built by script.js from the EDU list -->
+    <section id="education" class="ma">
+      <div class="w">
+        <h2 class="rv">Education</h2>
+        <p class="rv" style="color: var(--mute); margin-top: -12px">
+          Hover or tap a dashed item to see the degree or the university. Tap a
+          certificate title to read it.
+        </p>
+        <!-- EDUCATION: rows come from the EDU list in the script. Hover pictures: deg-bs, uni-swat, deg-bed, uni-aiou, school-hssc, school-ssc. The HSSC and SSC titles open their certificates (script.js, FILES). -->
+        <div class="list" id="edu"></div>
+      </div>
+    </section>
+
+    <!-- RESEARCH: paper title, summary and links -->
+    <section id="research" class="ma">
+      <div class="w">
+        <h2 class="rv">Research</h2>
+        <div class="g it rv">
+          <small
+            >Published 2026 · Contributions to Plasma Physics 66, e70094 ·
+            Accepted 25 Feb 2026</small
+          >
+          <h3>
+            Linear and Nonlinear Mode in Magnetized e–i Plasma With
+            Non-Maxwellian Distribution
+          </h3>
+          <p>
+            Authors: Aziz Khan, Raees Khan, Adil Khan, Yasmeen Rashid, Salma
+            Rashid and Muhammad Shafiq. I worked on the analytical models of
+            drift waves and ITG instabilities with Kaniadakis electrons, the
+            numerical simulations and plots in Python, and the LaTeX write-up.
+            The paper derives the linear dispersion relation and a Korteweg–de
+            Vries (KdV) equation whose coefficients depend on the spectral index
+            κ.
+          </p>
+          <p style="margin-top: 10px">
+            <a
+              href="https://doi.org/10.1002/ctpp.70094"
+              target="_blank"
+              rel="noopener"
+              >DOI 10.1002/ctpp.70094</a
+            >
+            ·
+            <a
+              href="https://www.researchgate.net/publication/401898815_Linear_and_Nonlinear_Mode_in_Magnetized_e-i_Plasma_With_NonMaxwellian_Distribution"
+              target="_blank"
+              rel="noopener"
+              >ResearchGate</a
+            >
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUALIFICATIONS (recruiters): BS Physics and B.Ed. Cards are built by script.js -->
+    <section id="qualifications" class="mr">
+      <div class="w">
+        <h2 class="rv">Qualifications</h2>
+        <div class="quals" id="qual"></div>
+      </div>
+    </section>
+
+    <!-- TEACHING EXPERIENCE: rows are built by script.js from the EXP list -->
+    <section id="experience">
+      <div class="w">
+        <h2 class="rv">Teaching experience</h2>
+        <!-- EXPERIENCE: rows come from the EXP list in the script. Hover pictures: e-tkfs, e-lab, e-acad, e-isl, e-ims, e-trs -->
+        <div class="xp" id="exp"></div>
+      </div>
+    </section>
+
+    <!-- LAB BANNER (recruiters): wide picture with text over it.
+         The picture is an internet link. To change it, replace the link in LAB_IMG in script.js. -->
+    <section id="lab" class="mr">
+      <div class="w">
+        <div class="lab g rv">
+          <div class="labbg"></div>
+          <div class="slides" id="slides"></div>
+          <div class="dots" id="dots"></div>
+          <div class="labtxt">
+            <h2>Laboratory work</h2>
+            <p>
+              I also managed laboratory work during school and college, and I do
+              the same today at The Knowledge Fort School.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES (recruiters): cards with pictures from internet links. Change them in SERVICES in script.js -->
+    <section id="services" class="mr">
+      <div class="svbg" id="svbg"></div>
+      <div class="w">
+        <h2 class="rv">What I offer</h2>
+        <div class="svs" id="svs"></div>
+      </div>
+    </section>
+
+    <!-- TEACHER OF THE YEAR AWARD (recruiters).
+         PASTE YOUR PICTURE: in script.js set AWARD_IMG to your picture link. -->
+    <section id="award" class="mr">
+      <div class="w">
+        <h2 class="rv">Teacher of the Year</h2>
+        <div class="award g rv" id="awardbox"></div>
+      </div>
+    </section>
+
+    <!-- RESEARCH DEMO: sliders, graphs, 3D tokamak. Drawn by script.js -->
+    <section id="demo" class="ma">
+      <div class="w">
+        <h2 class="rv">Research demo</h2>
+        <p class="rv" style="color: var(--mute); margin-top: -12px">
+          Move a slider to see how the growth rate, the soliton and the
+          turbulence respond. The soliton tab uses the coefficients of the
+          published paper. The other tabs illustrate the trends the paper
+          reports.
+        </p>
+        <div class="card ctl">
+          <label
+            >Ion temperature gradient η<sub>i</sub> <b id="vEta"></b
+            ><input id="eta" type="range" min="0" max="7" step="0.1" value="2"
+          /></label>
+          <label
+            >Temperature ratio τ <b id="vTau"></b
+            ><input
+              id="tau"
+              type="range"
+              min="0.1"
+              max="3"
+              step="0.1"
+              value="1.1"
+          /></label>
+          <label style="display: none"
+            >Density gradient ω<sub>ni</sub> <b id="vWni"></b
+            ><input
+              id="wni"
+              type="range"
+              min="0.02"
+              max="0.4"
+              step="0.01"
+              value="0.1"
+          /></label>
+          <label
+            >Magnetic field B₀ (×10⁴ G) <b id="vB"></b
+            ><input id="B" type="range" min="1" max="8" step="0.5" value="3"
+          /></label>
+          <label
+            >Spectral index κ <b id="vKap"></b
+            ><input id="kap" type="range" min="2" max="30" step="0.5" value="3"
+          /></label>
+        </div>
+
+        <div class="tabs" role="tablist">
+          <button role="tab" id="t0" aria-selected="true">Drive index</button>
+          <button role="tab" id="t1" aria-selected="false">Soliton</button>
+          <button role="tab" id="t2" aria-selected="false">Turbulence</button>
+        </div>
+
+        <div class="card" id="p0">
+          <canvas id="c0" height="270"></canvas>
+          <p class="rd" id="r0"></p>
+          <p class="note">
+            Solid line: current settings. Dashed line: starting values. This is
+            an illustrative drive index that follows the trends reported in the
+            paper (no drive below η<sub>i</sub> = 2/3, stronger with larger
+            η<sub>i</sub>, weaker with larger τ and B<sub>0</sub>). It is not a
+            computed root of the dispersion relation, and κ does not enter it.
+          </p>
+        </div>
+
+        <div class="card" id="p1" hidden>
+          <canvas id="c1" height="270"></canvas>
+          <p class="rd" id="r1"></p>
+          <p class="note">
+            KdV soliton Φ = Φ<sub>m</sub> sech²(ζ/Δ) with Φ<sub>m</sub> = 3U/λ
+            and Δ = √(4δ/U), built from α<sub>1</sub>(κ), α<sub>2</sub>(κ) as
+            printed in Eqs. 21–22 and the coefficients A, B, D of Eqs. 62–65.
+            The temperature response T = A<sub>1</sub>Φ + K<sub>2</sub>Φ² is
+            taken from the energy equation (16), because the paper does not
+            print A<sub>1</sub> and K<sub>2</sub>. Constants the paper does not
+            state (β, μ, v<sub>ni</sub>, U) are fixed round values, so the
+            trends are the paper’s but the units are normalised. Dashed:
+            starting values.
+          </p>
+        </div>
+
+        <div class="card" id="p2" hidden>
+          <span class="tag">Illustration</span>
+          <canvas id="c2" height="300" style="margin-top: 8px"></canvas>
+          <canvas id="c3" height="90" style="margin-top: 8px"></canvas>
+          <p class="rd" id="r2"></p>
+          <p class="note">
+            A poloidal cross-section of a tokamak. Each wave mode grows at the
+            ITG growth rate from the first tab, then saturates. The line below
+            shows total turbulence level over time. This is a visual model, not
+            a gyrokinetic simulation and not a result from the paper.
+          </p>
+          <button class="r" id="rs">Restart turbulence</button>
+        </div>
+
+        <div class="card" id="tk">
+          <span class="tag">3D view</span
+          ><canvas
+            id="c4"
+            height="330"
+            style="margin-top: 8px; touch-action: none; cursor: grab"
+          ></canvas>
+          <p class="rd" id="r4"></p>
+          <p class="note">
+            A tokamak in 3D. The donut is the plasma and its colour is the
+            electric potential (violet negative, coral positive). Eddies grow as
+            the drive index rises, and they get finer as B<sub>0</sub> grows.
+            The gold ring pulse is the soliton from tab 2, so its height and
+            width follow κ, η<sub>i</sub>, τ and B<sub>0</sub>. The green lines
+            are magnetic field lines, which twist more as B<sub>0</sub> grows,
+            and the dark rings are the coils. Drag to rotate. This is an
+            illustration driven by your sliders.
+          </p>
+        </div>
+        <div class="card" id="why">
+          <h3 style="font-size: 20px; margin-bottom: 8px">
+            What each slider does
+          </h3>
+          <p style="color: var(--mute); margin: 0 0 6px">
+            Move a slider and its line lights up. These lines follow the results
+            of my research.
+          </p>
+          <p data-k="eta">
+            <b>Ion temperature gradient (η<sub>i</sub>) up.</b> This is the free
+            energy that drives the mode. The paper reports that below η<sub
+              >i</sub
+            >
+            = 2/3 the mode is stable. Above it the peak growth rate rises
+            strongly, the unstable range widens and the peak moves slightly to
+            larger k. Solitons get a smaller amplitude and their width barely
+            changes (Fig. 7). In a machine this means stronger turbulence.
+          </p>
+          <p data-k="tau">
+            <b>Temperature ratio (τ = T<sub>e</sub>/T<sub>i</sub>) up.</b> The
+            paper finds that the growth rate falls and the unstable range
+            narrows, so hotter electrons calm the mode. The soliton gets taller
+            (0.009 to 0.072 in its Fig. 8) and narrower.
+          </p>
+          <p data-k="B">
+            <b>Magnetic field (B<sub>0</sub>) up.</b> The paper reports that the
+            growth rate falls, the unstable range narrows and the peak moves
+            slightly to smaller k, so a stronger field stabilises the mode.
+            Solitons get narrower and more localised (Fig. 6).
+          </p>
+          <p data-k="kap">
+            <b>Spectral index (κ) down.</b> More fast, suprathermal electrons
+            are present. In the paper’s soliton figure (Fig. 5) the amplitude
+            falls from 0.221 at κ = 100 to 0.045 at κ = 2. For large κ the
+            Maxwellian result returns.
+          </p>
+          <p>
+            <b>Why it matters.</b> Turbulence moves heat out of the plasma and
+            weakens confinement. Choosing the right η<sub>i</sub>, τ and B<sub
+              >0</sub
+            >
+            can reduce the ITG turbulence and improve confinement.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOCUMENTS: cards are built by script.js from the DOCS list -->
+    <section id="documents">
+      <div class="w">
+        <h2 class="rv">Documents</h2>
+        <p class="rv" style="color: var(--mute); margin-top: -12px">
+          Tap a document to read it here on the site.
+        </p>
+        <!-- DOCUMENTS: cards come from the DOCS list in the script. Files go in FILES: deg, tr, moi, paper, eng, pp, tc, ssc, hssc -->
+        <div id="more" class="mr"></div>
+        <div class="docs" id="docs"></div>
+      </div>
+    </section>
+
+    <!-- FAQ: add a question by copying one <details> block -->
+    <section id="faq">
+      <div class="w fq">
+        <h2 class="rv">FAQ</h2>
+        <details class="g rv ma">
+          <summary>What are you applying for?</summary>
+          <p>
+            I'm applying for MS programs that offer funding or scholarships, in
+            applied, plasma, quantum and semiconductor physics.
+          </p>
+        </details>
+        <details class="g rv ma">
+          <summary>What research have you done?</summary>
+          <p>
+            I researched ITG modes in magnetized electron-ion plasma using
+            Kaniadakis non-Maxwellian distributions, with linear and nonlinear
+            analysis. The work is published in Contributions to Plasma Physics.
+          </p>
+        </details>
+        <details class="g rv">
+          <summary>Do you take on jobs?</summary>
+          <p>
+            Yes. I take on technical roles in applied physics, laboratory work,
+            instrumentation and industrial safety, as well as teaching.
+          </p>
+        </details>
+        <details class="g rv">
+          <summary>Can I read your documents?</summary>
+          <p>
+            Yes. Open the Documents section and tap any item. Everything opens
+            inside this site.
+          </p>
+        </details>
+        <details class="g rv">
+          <summary>What is the best way to reach you?</summary>
+          <p>
+            WhatsApp is fastest. Email also works, and the form below can send
+            your message either way.
+          </p>
+        </details>
+        <details class="g rv">
+          <summary>Can I get references?</summary>
+          <p>
+            Yes. Three referees, including my research supervisor, are available
+            on request.
+          </p>
+        </details>
+        <details class="g rv mr">
+          <summary>What do you teach?</summary>
+          <p>
+            Physics and mathematics at secondary and college level. I also run
+            the physics lab practicals and a home tuition academy.
+          </p>
+        </details>
+        <details class="g rv mr">
+          <summary>Can I see proof of your teaching?</summary>
+          <p>
+            Yes. The Documents section has my experience certificates, my
+            teaching awards and three recommendation letters.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- CONTACT FORM: sends the message to WhatsApp or email -->
+    <section id="contact">
+      <div class="w">
+        <h2 class="rv">Leave a message</h2>
+        <form
+          id="f"
+          class="g rv"
+          style="padding: 20px"
+          onsubmit="return false;"
+        >
+          <label>Your name<input id="n" autocomplete="name" /></label>
+          <label
+            >You are a<select id="r">
+              <option>Professor</option>
+              <option>Recruiter</option>
+              <option>Other</option>
+            </select></label
+          >
+          <label
+            >Message<textarea
+              id="m"
+              placeholder="Tell me about the program, role or question."
+            ></textarea>
+          </label>
+          <div class="row">
+            <button class="btn wa" id="sw">Send on WhatsApp</button
+            ><button id="se">Send by email</button>
+          </div>
+          <p id="note" role="status"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="w">
+        Adil Khan · Mingora, Swat, Pakistan ·
+        <a href="mailto:ar2108912@gmail.com">ar2108912@gmail.com</a> ·
+        <a href="https://wa.me/923499236145" target="_blank" rel="noopener"
+          >WhatsApp</a
+        >
+        ·
+        <a
+          href="https://www.linkedin.com/adil-raza-00681129b"
+          target="_blank"
+          rel="noopener"
+          >LinkedIn</a
+        >
+      </div>
+    </footer>
+
+    <!-- HOVER POP-UP (filled by script.js) -->
+    <div id="pop" class="g" aria-hidden="true">
+      <div class="im" id="pim"></div>
+      <p id="pcap"></p>
+    </div>
+    <!-- DOCUMENT VIEWER (opened by script.js) -->
+    <div id="vw" role="dialog" aria-modal="true" aria-label="Document viewer">
+      <header>
+        <h3 id="vt"></h3>
+        <button id="vx">Close</button>
+      </header>
+      <div id="vs"></div>
+    </div>
+    <!-- CV that is printed when someone taps Download CV (filled by script.js) -->
+    <div id="cvprint"></div>
+
+    <!-- All the behaviour of the page lives in script.js -->
+    <script src="script.js"></script>
+  </body>
+</html>
