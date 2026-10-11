@@ -241,7 +241,7 @@
     var im = IMG[pic];
     return (
       '<article class="xc g rv"><div class="xi">' +
-      (im ? '<img src="' + im + '" alt="" loading="lazy">' : "") +
+      (im ? '<img src="' + im + '" alt="" loading="lazy" decoding="async">' : "") +
       '</div><div class="xt"><small>' +
       o.w +
       "</small><br><h3" +
@@ -388,7 +388,7 @@
         ')"></div>' +
         '<img src="' +
         s.img +
-        '" alt="" loading="lazy" onerror="this.style.display=\'none\'">' +
+        '" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\'">' +
         '<div class="st"><h3>' +
         s.t +
         "</h3><p>" +
@@ -525,7 +525,8 @@
   function bubbles() {
     var box = Q("#bubs");
     if (box.childNodes.length) return;
-    for (var n = 0; n < 18; n++) {
+    var cnt = matchMedia("(max-width: 760px)").matches ? 7 : 18;
+    for (var n = 0; n < cnt; n++) {
       var s = 10 + Math.random() * 38,
         b = document.createElement("span");
       b.className = "bub";
@@ -555,7 +556,7 @@
       document.body.classList.add("swap");
       setTimeout(function () {
         document.body.classList.remove("swap");
-      }, 850);
+      }, 500);
     }
     firstMode = false;
     if (k == "R") bubbles();
@@ -573,23 +574,6 @@
     reveal();
   }
   /* ===== smooth switch between the two views: a circle of the new theme grows out of the button ===== */
-  /* water drops: three rings spread out from the button like ripples on a pond */
-  function drops(x, y) {
-    for (var n = 0; n < 3; n++) {
-      var d = document.createElement("span");
-      d.className = "drop";
-      d.style.cssText =
-        "left:" + x + "px;top:" + y + "px;animation-delay:" + n * 0.2 + "s";
-      document.body.appendChild(d);
-      setTimeout(
-        function (el) {
-          el.remove();
-        },
-        2200,
-        d,
-      );
-    }
-  }
   function go(k) {
     var cur = document.body.classList.contains("rec") ? "R" : "A";
     if (cur === k) return;
@@ -597,9 +581,9 @@
       r = btn.getBoundingClientRect(),
       x = r.left + r.width / 2,
       y = r.top + r.height / 2;
-    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) drops(x, y);
     if (
       !document.startViewTransition ||
+      matchMedia("(max-width: 760px)").matches ||
       matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
       mode(k); /* older browsers: the colours fade and the page blurs in */
@@ -621,7 +605,7 @@
           ],
         },
         {
-          duration: 1100,
+          duration: 700,
           easing: "cubic-bezier(.2,.8,.2,1)",
           pseudoElement: "::view-transition-new(root)",
         },
@@ -638,6 +622,7 @@
   var ph = Q("#ph"),
     im = ph.querySelector("img");
   ph.addEventListener("pointermove", function (e) {
+    if (e.pointerType === "touch") return;
     var b = ph.getBoundingClientRect(),
       x = (e.clientX - b.left) / b.width - 0.5,
       y = (e.clientY - b.top) / b.height - 0.5;
@@ -657,7 +642,7 @@
           (function (el) {
             setTimeout(function () {
               el.style.transitionDelay = "";
-            }, 1600);
+            }, 900);
           })(e.target);
           io.unobserve(e.target);
         }
@@ -937,14 +922,17 @@ function sol(P) {
 
 /* Drawing helpers for the graphs */
 function setup(c) {
-  var d = window.devicePixelRatio || 1,
+  var d = Math.min(window.devicePixelRatio || 1, 2),
     w = c.clientWidth,
     h = c._h || (c._h = parseInt(c.getAttribute("height")));
   c.style.height = h + "px";
-  c.width = w * d;
-  c.height = h * d;
+  var cw = Math.round(w * d),
+    ch = Math.round(h * d);
+  if (c.width !== cw) c.width = cw;
+  if (c.height !== ch) c.height = ch;
   var x = c.getContext("2d");
   x.setTransform(d, 0, 0, d, 0, 0);
+  x.clearRect(0, 0, w, h);
   return [x, w, h];
 }
 function frame(x, w, h, x0, x1, y0, y1, xl, yl) {
@@ -1290,8 +1278,8 @@ requestAnimationFrame(loop);
   var R = 1,
     RV = 0.46,
     RP = 0.3,
-    N = 56,
-    M = 22,
+    N = matchMedia("(max-width: 760px)").matches ? 36 : 56,
+    M = matchMedia("(max-width: 760px)").matches ? 16 : 22,
     NM = 10,
     lv = 0,
     modes = [],
@@ -1331,7 +1319,7 @@ requestAnimationFrame(loop);
   }
 
   function draw() {
-    var d = window.devicePixelRatio || 1,
+    var d = Math.min(window.devicePixelRatio || 1, 2),
       w = c.clientWidth;
     if (c._w !== w) {
       c._w = w;
@@ -1573,6 +1561,7 @@ requestAnimationFrame(loop);
     }
   }
   document.addEventListener("pointermove", function (e) {
+    if (e.pointerType === "touch") return;
     var g = e.target.closest && e.target.closest(".g");
     if (g !== last) clear();
     if (!g) return;
