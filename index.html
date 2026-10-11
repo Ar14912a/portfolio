@@ -165,7 +165,10 @@
         color: var(--mute);
         padding: 7px 13px;
         border-radius: 999px;
-        transition: all 0.3s var(--ease);
+        transition:
+          background 0.25s var(--ease),
+          color 0.25s var(--ease),
+          transform 0.25s var(--ease);
       }
       nav a:hover {
         background: var(--v);
@@ -289,13 +292,11 @@
       @keyframes wd {
         from {
           opacity: 0;
-          transform: translateY(34px);
-          filter: blur(12px);
+          transform: translateY(26px);
         }
         to {
           opacity: 1;
           transform: none;
-          filter: blur(0);
         }
       }
       h1 em {
@@ -482,7 +483,10 @@
         background: rgba(255, 255, 255, 0.7);
         border: 1px solid var(--line);
         font-size: 15px;
-        transition: all 0.3s var(--ease);
+        transition:
+          background 0.25s var(--ease),
+          color 0.25s var(--ease),
+          transform 0.25s var(--ease);
       }
       .tags li:hover {
         background: var(--v);
@@ -669,17 +673,14 @@
       /* ===== SMOOTH APPEAR WHEN SCROLLING ===== */
       .rv {
         opacity: 0;
-        transform: translateY(30px);
-        filter: blur(8px);
+        transform: translateY(22px);
         transition:
-          opacity 0.9s var(--ease),
-          transform 0.9s var(--ease),
-          filter 0.9s var(--ease);
+          opacity 0.55s var(--ease),
+          transform 0.55s var(--ease);
       }
       .rv.in {
         opacity: 1;
         transform: none;
-        filter: none;
       }
       /* ===== RESEARCH DEMO: sliders, tabs, canvases ===== */
       .ctl {
@@ -1447,8 +1448,6 @@
       @keyframes swapin {
         from {
           opacity: 0;
-          filter: blur(10px) saturate(2);
-          transform: scale(0.985);
         }
       }
 
@@ -1505,14 +1504,6 @@
           opacity 0.9s ease,
           background 0.9s ease;
       }
-      .xc,
-      .sv,
-      .dc,
-      .it,
-      .btn,
-      button {
-        will-change: transform;
-      }
       /* the circle reveal when you press For admissions / For recruiters */
       ::view-transition-old(root),
       ::view-transition-new(root) {
@@ -1526,34 +1517,6 @@
         z-index: 2;
       }
 
-      /* ===== WATER DROP: rings that spread out from the button when you switch views ===== */
-      .drop {
-        position: fixed;
-        z-index: 95;
-        width: 36px;
-        height: 36px;
-        margin: -18px 0 0 -18px;
-        border-radius: 50%;
-        pointer-events: none;
-        background: radial-gradient(
-          circle,
-          rgba(255, 255, 255, 0) 56%,
-          rgba(255, 255, 255, 0.75) 62%,
-          rgba(180, 235, 255, 0.35) 68%,
-          rgba(255, 255, 255, 0) 74%
-        );
-        animation: dropring 1.6s cubic-bezier(0.2, 0.65, 0.25, 1) forwards;
-      }
-      @keyframes dropring {
-        from {
-          transform: scale(0.3);
-          opacity: 1;
-        }
-        to {
-          transform: scale(60);
-          opacity: 0;
-        }
-      }
 
       /* ===== HOVER: a slow, gentle grow (no sudden jump) ===== */
       .xc,
@@ -1564,10 +1527,9 @@
       .award,
       .lab {
         transition:
-          opacity 0.9s var(--ease),
-          filter 0.9s var(--ease),
-          transform 1.3s cubic-bezier(0.22, 0.61, 0.36, 1),
-          box-shadow 1.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+          opacity 0.55s var(--ease),
+          transform 0.4s var(--ease),
+          box-shadow 0.4s var(--ease);
       }
       .xc:hover {
         transform: scale(1.03);
@@ -1586,7 +1548,7 @@
       }
       .xi img,
       .sv img {
-        transition-duration: 2.4s;
+        transition-duration: 0.6s;
         transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
       }
       .xc:hover .xi img,
@@ -1596,9 +1558,9 @@
       .btn,
       button {
         transition:
-          transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
-          box-shadow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
-          background 0.5s;
+          transform 0.25s var(--ease),
+          box-shadow 0.25s var(--ease),
+          background 0.25s;
       }
 
       /* ===== LAB SLIDESHOW: pictures drift in, zoom slowly and fade into each other ===== */
@@ -1689,6 +1651,101 @@
       #services .w {
         position: relative;
         z-index: 1;
+      }
+      /* ===== SMOOTH ON PHONES: lighter effects, no sticky hover, press feedback ===== */
+      html {
+        -webkit-tap-highlight-color: transparent;
+      }
+      .btn,
+      button,
+      a,
+      summary {
+        touch-action: manipulation;
+      }
+      @media (max-width: 760px), (hover: none) {
+        .g,
+        .card {
+          -webkit-backdrop-filter: none;
+          backdrop-filter: none;
+          background-color: rgba(255, 255, 255, 0.62);
+        }
+        body.rec .g,
+        body.rec .card {
+          background-color: rgba(238, 249, 255, 0.66);
+        }
+        nav.g {
+          -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+          background-color: rgba(255, 255, 255, 0.72);
+        }
+        body.rec nav.g {
+          background-color: rgba(238, 249, 255, 0.78);
+        }
+        #vw {
+          -webkit-backdrop-filter: none;
+          backdrop-filter: none;
+          background: rgba(236, 240, 255, 0.94);
+        }
+        body {
+          transition: none;
+        }
+        .bl {
+          animation: none;
+          filter: blur(48px);
+        }
+        .ph:before {
+          animation: none;
+          filter: blur(8px);
+        }
+        body.rec:after {
+          animation: none;
+          mix-blend-mode: normal;
+          opacity: 0.22;
+        }
+        body.swap section,
+        body.swap header {
+          animation-duration: 0.4s;
+        }
+        #services .svbg {
+          filter: none;
+          transform: none;
+        }
+        .lab .slide,
+        .lab .slide.on,
+        .lab .slide.prev {
+          transform: none;
+          transition: opacity 1.2s ease;
+        }
+        h1 .wd {
+          animation-duration: 0.6s;
+          animation-delay: calc(var(--i) * 0.05s + 0.1s);
+        }
+      }
+      @media (hover: none) {
+        .xc:hover,
+        body.rec .xc:hover,
+        .sv:hover,
+        .dc:hover,
+        .it:hover,
+        .btn:hover,
+        button:hover,
+        .tags li:hover {
+          transform: none;
+        }
+        .xc:hover .xi img,
+        .sv:hover img,
+        .lab:hover img {
+          transform: none;
+        }
+      }
+      .btn:active,
+      button:active,
+      .dc:active,
+      .xc:active,
+      .sv:active,
+      .it:active {
+        transform: scale(0.97);
+        transition-duration: 0.12s;
       }
     </style>
   </head>
