@@ -318,7 +318,7 @@
   var SERVICES_BG = dthumb("1671vj4qnw8Bp-o-IR-HvAJLaKzNBORia", 1200);
   /* YOUR TEACHER OF THE YEAR PICTURE (afaq.jpg in your Pics folder).
      To use another picture, replace the file id below. */
-  var AWARD_IMG = dthumb("1wXVqYgF1AmUny3U4pPCslZ_aj87r81Fm", 900);
+  var AWARD_IMG = dthumb("1gFJU5-OgZAQG2jNbYjGsvx6agTJXZ_ZD", 900);
 
   /* slideshow behind the laboratory text: each picture drifts in, slowly zooms, then fades into the next */
   var slideTimer = null;
