@@ -66,7 +66,7 @@
     isl: { kind: "drive", id: "117W8-11_Akb40SrUbikhyEVv-h5mFbgg" },
     isl2: { kind: "drive", id: "1_DfsbZNucTFUHFva2JfwMm4IaVJUA7Sj" },
     trs: { kind: "drive", id: "1us04eeQ21EUxGB-fYfC5pdvMUuQTTD70" },
-    award: { kind: "drive", id: "1gFJU5-OgZAQG2jNbYjGsvx6agTJXZ_ZD" },
+    award: { kind: "drive", id: "1Iwnkpcc982WaXVeyzkm1TpYDWFQtddxf" },
     rec1: { kind: "drive", id: "1rPo5SD5vtihvi4Fle7WKtqjBiph2iHtl" },
     rec2: { kind: "drive", id: "18sWqG13ZdkpERnoIlj3ywFbo8FQLm0Oi" },
     seminar: { kind: "drive", id: "1VFcbgrf01GqGExcLnbpAluV5bDZpQzpq" },
