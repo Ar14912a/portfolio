@@ -1257,7 +1257,7 @@ requestAnimationFrame(loop);
   c.addEventListener("pointermove", function (e) {
     if (dr) {
       ry = dr.a - (e.clientX - dr.x) * 0.01;
-      rx = Math.max(-1.2, Math.min(1.4, dr.b - (e.clientY - dr.y) * 0.01));
+      rx = Math.max(-1.2, Math.min(1.4, dr.b + (e.clientY - dr.y) * 0.01));
     }
   });
   function up() {
